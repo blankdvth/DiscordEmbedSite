@@ -28,7 +28,7 @@ def show(data: str):
 
 @app.route('/oembed/<data>')
 def oembed(data: str):
-    data = load_data(data)
+    data = load_data(data.rstrip(".json"))
 
     oembed_data = {}
     if "title" in data:
