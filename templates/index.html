@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/bulma-prefers-dark" />
     <script src="{{ url_for('static', filename='lz-string.min.js') }}"></script>
-{#    <script src="../static/lz-string.min.js"></script>#}
     <noscript>This website requires JavaScript to work, please enable JavaScript.</noscript>
 </head>
 <body>
@@ -27,41 +26,12 @@
         </div>
     </div>
     <div class="field">
-        <label class="label" for="provider" title="Text for provider field of embed">Provider Text</label>
-        <div class="control has-icons-left">
-            <span class="icon is-small is-left has-text-grey">
-                <ion-icon name="business-outline"></ion-icon>
-            </span>
-            <input class="input" type="text" placeholder="Acme Corp" id="provider">
-        </div>
-    </div>
-    <div class="field">
-        <label class="label" for="provider-url" title="Provider field hyperlink URL">Provider URL</label>
-        <div class="control has-icons-left">
-            <span class="icon is-small is-left has-text-grey">
-                <ion-icon name="link-outline"></ion-icon>
-            </span>
-            <input class="input" type="url" placeholder="https://example.org" id="provider-url" oninput="handleInput(this)">
-            <p class="help is-danger is-hidden" id="provider-url-help">Must be a URL</p>
-        </div>
-    </div>
-    <div class="field">
-        <label class="label" for="author" title="Text for author field of embed">Author Text</label>
+        <label class="label" for="author" title="Text for author (technically provider) field of embed">Author Text</label>
         <div class="control has-icons-left">
             <span class="icon is-small is-left has-text-grey">
                 <ion-icon name="person-outline"></ion-icon>
             </span>
             <input class="input" type="text" placeholder="blank_dvth" id="author">
-        </div>
-    </div>
-    <div class="field">
-        <label class="label" for="author-url" title="Author field hyperlink URL">Author URL</label>
-        <div class="control has-icons-left">
-            <span class="icon is-small is-left has-text-grey">
-                <ion-icon name="link-outline"></ion-icon>
-            </span>
-            <input class="input" type="url" placeholder="https://about.blankdvth.com" id="author-url" oninput="handleInput(this)">
-            <p class="help is-danger is-hidden" id="author-url-help">Must be a URL</p>
         </div>
     </div>
     <div class="field">
@@ -95,17 +65,27 @@
         </div>
 
     </div>
-    <div class="field">
-        <label class="label" for="image" title="Image for embed, must be direct URL to an image">Image (URL)</label>
-        <div class="control has-icons-left">
-            <span class="icon is-small is-left has-text-grey">
-                <ion-icon name="image-outline"></ion-icon>
+    <div class="field has-addons">
+        <p class="control">
+            <label class="label is-hidden" for="media-type">Media Type</label>
+            <span class="select">
+                <select id="media-type" data-default="Image" oninput="handleMediaInput(this)">
+                    <option>Image</option>
+                    <option>Video</option>
+                </select>
             </span>
-            <input class="input" type="url" placeholder="https://s3.blankdvth.com/discord-logo-blue.png" id="image" oninput="handleInput(this, /^https?:\/\/.*\/.*\.(png|gif|webp|jpeg|jpg)\??.*$/i)">
-        </div>
-        <p class="help is-danger is-hidden" id="image-help">Must be a URL with a valid image extension</p>
+        </p>
+        <p class="control has-icons-left is-expanded">
+            <span class="icon is-small is-left has-text-grey">
+                <ion-icon name="image-outline" id="image-outline-icon"></ion-icon>
+                <ion-icon name="videocam-outline" id="video-outline-icon" class="is-hidden"></ion-icon>
+            </span>
+            <label class="label is-hidden" for="media">Media URL</label>
+            <input class="input" type="url" placeholder="https://s3.blankdvth.com/discord-logo-blue.png" id="media" oninput="handleMediaInput(this)" data-placeholder-image="https://s3.blankdvth.com/discord-logo-blue.png" data-placeholder-video="https://s3.blankdvth.com/a-great-video.mp4">
+            <span class="help is-danger is-hidden" id="media-help" data-image="Must be a direct image URL with a valid extension" data-video="Must be a direct video URL of type MP4, WebM, or MOV">Must be a direct image URL with a valid extension</span>
+        </p>
     </div>
-    <div class="field">
+    <div class="field" id="large-image-field">
         <div class="control">
             <label class="checkbox" title="Whether the image will relocated at the bottom and enlarged, or remain as a smaller thumbnail in the top-right">
                 <input type="checkbox" id="large-image">
@@ -113,16 +93,6 @@
             </label>
         </div>
     </div>
-{#    <div class="field">#}
-{#        <label class="label" for="video" title="Video for embed, must be direct URL to MP4, WebM, or MOV video">Video (URL)</label>#}
-{#        <div class="control has-icons-left">#}
-{#            <span class="icon is-small is-left has-text-grey">#}
-{#                <ion-icon name="videocam-outline"></ion-icon>#}
-{#            </span>#}
-{#            <input class="input" type="url" placeholder="https://s3.blankdvth.com/a-great-video.mp4" id="video" oninput="handleInput(this, /^https?:\/\/.*\/.*\.(mp4|webm|mov)\??.*$/i)">#}
-{#        </div>#}
-{#        <p class="help is-danger is-hidden" id="video-help">Must be a direct video URL with a type of MP4 WEBM, or MOV</p>#}
-{#    </div>#}
     <div class="field">
         <label class="label" for="redirect" title="What the actual embed link will redirect to. A redirect warning WILL take place.">Redirect URL</label>
         <div class="control has-icons-left">
@@ -177,7 +147,6 @@
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 <script src="{{ url_for('static', filename='index.js') }}"></script>
-{#<script src="../static/index.js"></script>#}
 </body>
 <footer class="footer">
     <div class="content has-text-centered">

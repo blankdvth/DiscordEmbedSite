@@ -10,24 +10,25 @@
         <title>Discord Embed Generator Site</title>
     {% endif %}
 
+    {% if data.author is defined %}
+        <meta property="og:site_name" content="{{ data.author }}">
+    {% endif %}
+
     {% if data.description is defined %}
         <meta name="description" content="{{ data.description }}">
         <meta property="og:description" content="{{ data.description }}">
-        {% if data.large_image is defined and data.large_image %}
-            <meta name="twitter:card" content="summary_large_image">
+    {% endif %}
+
+    {% if data.media_type is defined %}
+        {% if data.media_type == "Image" %}
+            <meta property="og:image" content="{{ data.media }}">
+            {% if data.large_image is defined and data.large_image %}
+                <meta name="twitter:card" content="summary_large_image">
+            {% endif %}
+        {% elif data.media_type == "Video" %}
+            <meta property="og:type" content="video.other">
+            <meta property="og:video" content="{{ data.media }}">
         {% endif %}
-    {% endif %}
-
-    {% if data.image is defined %}
-        <meta property="og:image" content="{{ data.image }}">
-    {% endif %}
-
-    {% if data.provider is defined %}
-        <meta property="og:site_name" content="{{ data.provider }}">
-    {% endif %}
-
-    {% if data.provider_url is defined or data.author is defined or data.author_url is defined %}
-        <link rel="alternate" type="application/json+oembed" href="https://embed.blankdvth.com/oembed/{{ raw_data }}.json" title="oEmbed" />
     {% endif %}
 </head>
 <body>
