@@ -23,7 +23,7 @@
         <meta name="theme-color" content="{{ data.colour }}">
     {% endif %}
 
-    {% if data.media_type is defined %}
+    {% if data.media_type is defined and data.media is defined %}
         {% if data.media_type == "Image" %}
             <meta property="og:image" content="{{ data.media }}">
             {% if data.large_image is defined and data.large_image %}

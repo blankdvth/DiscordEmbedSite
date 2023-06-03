@@ -10,11 +10,46 @@ const mediaHelp = document.getElementById("media-help");
 const mediaThumbnail = document.getElementById("thumbnail-field");
 const largeImageField = document.getElementById("large-image-field");
 
+/** Fades out the element, then adds the is-hidden class to it.
+ * @param {HTMLElement} element The element to fade out.
+ */
+function fade(element) {
+    let op = 1;  // initial opacity
+    const timer = setInterval(function () {
+        if (op <= 0.1) {
+            clearInterval(timer);
+            element.classList.add("is-hidden");
+        }
+        element.style.opacity = op;
+        element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+        op -= op * 0.1;
+    }, 0.05);
+}
+
+/**
+ * Fades in the element, then removes the is-hidden class from it.
+ * @param {HTMLElement} element The element to fade in.
+ */
+function unfade(element) {
+    element.style.opacity = "0";
+    element.classList.remove("is-hidden");
+    let op = 0.1;  // initial opacity
+    element.style.display = 'block';
+    const timer = setInterval(function () {
+        if (op >= 1) {
+            clearInterval(timer);
+        }
+        element.style.opacity = op;
+        element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+        op += op * 0.1;
+    }, 0.05);
+}
+
 /**
  * Called upon user input in input element, used to handle validation.
  * If an element with an ID of `elementId-help` exists, it will be shown/hidden based on the validity of the input.
- * @param element {HTMLInputElement|HTMLTextAreaElement} The input element that was changed.
- * @param regex {RegExp | null} The regex to test the input against, if null, the default validity check will be used.
+ * @param {HTMLInputElement|HTMLTextAreaElement} element The input element that was changed.
+ * @param {RegExp | null} regex The regex to test the input against, if null, the default validity check will be used.
  * @returns {boolean} Whether the input is valid.
  */
 function handleInput(element, regex= null) {
@@ -40,7 +75,7 @@ function handleInput(element, regex= null) {
 
 /**
  * Called to handle make sure the colour inputs are equal.
- * @param changed {HTMLInputElement} The input element that was changed.
+ * @param {HTMLInputElement} changed The input element that was changed.
  */
 function handleColourInput(changed) {
     colourPicker.value = changed.value;
@@ -51,11 +86,11 @@ function handleColourInput(changed) {
 
 /**
  * Called to handle media inputs as appropriate based on the type of media.
- * @param element {HTMLInputElement | HTMLSelectElement}
+ * @param {HTMLInputElement | HTMLSelectElement} changed The input element that was changed.
  */
-function handleMediaInput(element) {
+function handleMediaInput(changed) {
     const mediaType = mediaSelect.value;
-    if (element.nodeName === "SELECT") {
+    if (changed.nodeName === "SELECT") {
         if (mediaType === "Image") {
             largeImageField.classList.remove("is-hidden");
             mediaThumbnail.classList.add("is-hidden");
@@ -121,6 +156,9 @@ function generate() {
     document.getElementById("url-box").classList.remove("is-hidden");
 }
 
+/**
+ * Copies the generated URL to the user's clipboard.
+ */
 function copyURL() {
     const copyConfirmation = document.getElementById("copy-confirmation");
     if (navigator.clipboard && window.isSecureContext) {
@@ -151,34 +189,6 @@ function copyURL() {
             fade(copyConfirmation);
         }, 2000);
     }
-}
-
-function fade(element) {
-    let op = 1;  // initial opacity
-    const timer = setInterval(function () {
-        if (op <= 0.1) {
-            clearInterval(timer);
-            element.classList.add("is-hidden");
-        }
-        element.style.opacity = op;
-        element.style.filter = 'alpha(opacity=' + op * 100 + ")";
-        op -= op * 0.1;
-    }, 0.05);
-}
-
-function unfade(element) {
-    element.style.opacity = "0";
-    element.classList.remove("is-hidden");
-    let op = 0.1;  // initial opacity
-    element.style.display = 'block';
-    const timer = setInterval(function () {
-        if (op >= 1) {
-            clearInterval(timer);
-        }
-        element.style.opacity = op;
-        element.style.filter = 'alpha(opacity=' + op * 100 + ")";
-        op += op * 0.1;
-    }, 0.05);
 }
 
 resetToDefault(); // Clear all inputs on page load
