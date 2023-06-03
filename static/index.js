@@ -7,8 +7,7 @@ const hexColourPicker = document.getElementById("colour-hex");
 const mediaSelect = document.getElementById("media-type");
 const mediaInput = document.getElementById("media");
 const mediaHelp = document.getElementById("media-help");
-const mediaImageIcon = document.getElementById("image-outline-icon");
-const mediaVideoIcon = document.getElementById("video-outline-icon");
+const mediaThumbnail = document.getElementById("thumbnail-field");
 const largeImageField = document.getElementById("large-image-field");
 
 /**
@@ -59,14 +58,12 @@ function handleMediaInput(element) {
     if (element.nodeName === "SELECT") {
         if (mediaType === "Image") {
             largeImageField.classList.remove("is-hidden");
-            mediaImageIcon.classList.remove("is-hidden");
-            mediaVideoIcon.classList.add("is-hidden");
+            mediaThumbnail.classList.add("is-hidden");
             mediaInput.placeholder = mediaInput.dataset.placeholderImage;
             mediaHelp.innerText = mediaHelp.dataset.image;
         } else if (mediaType === "Video") {
             largeImageField.classList.add("is-hidden");
-            mediaImageIcon.classList.add("is-hidden");
-            mediaVideoIcon.classList.remove("is-hidden");
+            mediaThumbnail.classList.remove("is-hidden");
             mediaInput.placeholder = mediaInput.dataset.placeholderVideo;
             mediaHelp.innerText = mediaHelp.dataset.video;
         }

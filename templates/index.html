@@ -58,7 +58,7 @@
             <div class="column is-narrow">
                 <div class="control">
                     <label class="label is-hidden" for="colour-hex" title="Hex code for embed sidebar colour">Hex Code</label>
-                    <input class="input" type="text" id="colour-hex" pattern="#[0-9a-fA-F]{6}" data-default="#2c2f33" oninput="if (handleInput(this) && this.value) handleColourInput(this)" style="width: 125px;" title="">
+                    <input class="input" type="text" id="colour-hex" pattern="#[0-9a-fA-F]{6}" data-default="#2c2f33" oninput="if (handleInput(this) && this.value) handleColourInput(this)" title="">
                 </div>
                 <p class="help is-danger is-hidden" id="colour-hex-help">Hex code is not valid</p>
             </div>
@@ -69,7 +69,7 @@
         </div>
 
     </div>
-    <label class="label" for="media-group">Media URL</label>
+    <label class="label" for="media-group" title="Media for embed">Media</label>
     <div class="field has-addons" id="media-group">
         <p class="control">
             <label class="label is-hidden" for="media-type">Media Type</label>
@@ -80,11 +80,7 @@
                 </select>
             </span>
         </p>
-        <p class="control has-icons-left is-expanded">
-            <span class="icon is-small is-left has-text-grey">
-                <ion-icon name="image-outline" id="image-outline-icon"></ion-icon>
-                <ion-icon name="videocam-outline" id="video-outline-icon" class="is-hidden"></ion-icon>
-            </span>
+        <p class="control is-expanded">
             <label class="label is-hidden" for="media">Media URL</label>
             <input class="input" type="url" placeholder="https://s3.blankdvth.com/discord-logo-blue.png" id="media" oninput="handleMediaInput(this)" data-placeholder-image="https://s3.blankdvth.com/discord-logo-blue.png" data-placeholder-video="https://s3.blankdvth.com/a-great-video.mp4">
             <span class="help is-danger is-hidden" id="media-help" data-image="Must be a direct image URL with a valid extension" data-video="Must be a direct video URL of type MP4, WebM, or MOV">Must be a direct image URL with a valid extension</span>
@@ -96,6 +92,16 @@
                 <input type="checkbox" id="large-image">
                 Large Image
             </label>
+        </div>
+    </div>
+    <div class="field is-hidden" id="thumbnail-field">
+        <label class="label" for="thumbnail" title="Thumbnail for video">Thumbnail URL</label>
+        <div class="control has-icons-left">
+            <span class="icon is-small is-left has-text-grey">
+                <ion-icon name="image-outline"></ion-icon>
+            </span>
+            <input class="input" type="url" placeholder="https://s3.blankdvth.com/discord-logo-blue.png" id="thumbnail" oninput="handleInput(this)">
+            <span class="help is-danger is-hidden" id="thumbnail-help">Must be a direct image URL with a valid extension</span>
         </div>
     </div>
     <div class="field">

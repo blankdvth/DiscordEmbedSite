@@ -32,6 +32,9 @@
         {% elif data.media_type == "Video" %}
             <meta property="og:type" content="video.other">
             <meta property="og:video" content="{{ data.media }}">
+            {% if data.thumbnail is defined %}
+                <meta property="og:image" content="{{ data.thumbnail }}">
+            {% endif %}
         {% endif %}
     {% endif %}
 </head>
