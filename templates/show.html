@@ -19,6 +19,10 @@
         <meta property="og:description" content="{{ data.description }}">
     {% endif %}
 
+    {% if data.colour is defined %}
+        <meta name="theme-color" content="{{ data.colour }}">
+    {% endif %}
+
     {% if data.media_type is defined %}
         {% if data.media_type == "Image" %}
             <meta property="og:image" content="{{ data.media }}">
