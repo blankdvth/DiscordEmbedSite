@@ -20,9 +20,11 @@ availability of this site.
 <details>
 <summary>Samples</summary>
 
-![Sample Embed - Small Image](https://s3.blankdvth.com/8fa2a452-cc1f-4ff1-92b5-e1c9d725b70d.png)
-![Sample Embed - Large Image](https://s3.blankdvth.com/fa4123ef-e9c6-44db-8158-dd49900059ce.png)
-![Sample Embed - Video](https://s3.blankdvth.com/bed3827c-70ac-4d03-b46e-bcfe87e3e542.png)
+![Sample Embed - Small Image](https://s3.blankdvth.com/8fa2a452-cc1f-4ff1-92b5-e1c9d725b70d.png)  
+![Sample Embed - Large Image](https://s3.blankdvth.com/fa4123ef-e9c6-44db-8158-dd49900059ce.png)  
+![Sample Embed - Video](https://s3.blankdvth.com/bed3827c-70ac-4d03-b46e-bcfe87e3e542.png)  
+![Sample Embed - Video Thumbnail](https://s3.blankdvth.com/bff0b037-0050-47c7-bb15-cf12dd4493e5.png)
+
 </details>
 
 ### Website
@@ -36,6 +38,7 @@ Embeds can be created using a simple form on the site. Here is a breakdown of th
     - By default, this will be a small image in the top-right corner of the embed. You can check the "Large Image" box to make it a large image at the bottom of the embed.
   - **Video** - The direct URL of the video to use, this means it must go directly to the video. Only videos of type MP4, WebM, or MOV are supported.
     - You can also optionally enter a thumbnail image URL to use for the video. This will replace the default video thumbnail (which is usually the first frame of the video).
+    - The description of the embed is not shown when a video is used.
 - **Redirect URL** - The URL to redirect to if the embed website URL is clicked. A redirect warning will be displayed.
 
 ### Programmatically
