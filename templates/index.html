@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Discord Embed URL Generator</title>
+    <meta name="author" content="blank_dvth">
+    <meta name="description" content="A simple tool that allows you to send Discord embeds via URL">
+    <meta name="keywords" content="Discord, embed, URL, generator, tool">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/bulma-prefers-dark" />
+    <script src="{{ url_for('static', filename='lz-string.min.js') }}"></script>
+{#    <script src="../static/lz-string.min.js"></script>#}
+    <noscript>This website requires JavaScript to work, please enable JavaScript.</noscript>
+</head>
+<body>
+<section class="section">
+    <h1 class="title">Discord Embed URL Generator</h1>
+    <h2 class="subtitle">A simple tool that allows you to send Discord embeds via URL*</h2>
+    <div class="field">
+        <label class="label" for="title" title="Title of embed">Title</label>
+        <div class="control has-icons-left">
+            <span class="icon is-small is-left has-text-grey">
+                <ion-icon name="pencil-outline"></ion-icon>
+            </span>
+            <input class="input" type="text" placeholder="What is the meaning to life?" id="title">
+        </div>
+    </div>
+    <div class="field">
+        <label class="label" for="provider" title="Text for provider field of embed">Provider Text</label>
+        <div class="control has-icons-left">
+            <span class="icon is-small is-left has-text-grey">
+                <ion-icon name="business-outline"></ion-icon>
+            </span>
+            <input class="input" type="text" placeholder="Acme Corp" id="provider">
+        </div>
+    </div>
+    <div class="field">
+        <label class="label" for="provider-url" title="Provider field hyperlink URL">Provider URL</label>
+        <div class="control has-icons-left">
+            <span class="icon is-small is-left has-text-grey">
+                <ion-icon name="link-outline"></ion-icon>
+            </span>
+            <input class="input" type="url" placeholder="https://example.org" id="provider-url" oninput="handleInput(this)">
+            <p class="help is-danger is-hidden" id="provider-url-help">Must be a URL</p>
+        </div>
+    </div>
+    <div class="field">
+        <label class="label" for="author" title="Text for author field of embed">Author Text</label>
+        <div class="control has-icons-left">
+            <span class="icon is-small is-left has-text-grey">
+                <ion-icon name="person-outline"></ion-icon>
+            </span>
+            <input class="input" type="text" placeholder="blank_dvth" id="author">
+        </div>
+    </div>
+    <div class="field">
+        <label class="label" for="author-url" title="Author field hyperlink URL">Author URL</label>
+        <div class="control has-icons-left">
+            <span class="icon is-small is-left has-text-grey">
+                <ion-icon name="link-outline"></ion-icon>
+            </span>
+            <input class="input" type="url" placeholder="https://about.blankdvth.com" id="author-url" oninput="handleInput(this)">
+            <p class="help is-danger is-hidden" id="author-url-help">Must be a URL</p>
+        </div>
+    </div>
+    <div class="field">
+        <label class="label" for="description" title="Description of embed">Description</label>
+        <div class="control">
+            <textarea class="textarea" id="description" placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id varius enim. Nunc faucibus justo. "></textarea>
+        </div>
+    </div>
+    <div class="field">
+        <label class="label" for="colour" title="Embed sidebar colour">Colour</label>
+        <div class="columns">
+            <div class="column">
+                <div class="control has-icons-left">
+                    <span class="icon is-small is-left has-text-grey">
+                        <ion-icon name="color-palette-outline"></ion-icon>
+                    </span>
+                    <input class="input" type="color" id="colour" data-default="#2c2f33" oninput="handleColourInput(this)">
+                </div>
+            </div>
+            <div class="column is-narrow">
+                <div class="control">
+                    <label class="label is-hidden" for="colour-hex" title="Hex code for embed sidebar colour">Hex Code</label>
+                    <input class="input" type="text" id="colour-hex" pattern="#[0-9a-fA-F]{6}" data-default="#2c2f33" oninput="if (handleInput(this) && this.value) handleColourInput(this)" style="width: 125px;" title="">
+                </div>
+                <p class="help is-danger is-hidden" id="colour-hex-help">Hex code is not valid</p>
+            </div>
+            <script>
+                document.getElementById("colour").value = "#2c2f33";
+                document.getElementById("colour-hex").value = "#2c2f33";
+            </script>
+        </div>
+
+    </div>
+    <div class="field">
+        <label class="label" for="image" title="Image for embed, must be direct URL to an image">Image (URL)</label>
+        <div class="control has-icons-left">
+            <span class="icon is-small is-left has-text-grey">
+                <ion-icon name="image-outline"></ion-icon>
+            </span>
+            <input class="input" type="url" placeholder="https://s3.blankdvth.com/discord-logo-blue.png" id="image" oninput="handleInput(this, /^https?:\/\/.*\/.*\.(png|gif|webp|jpeg|jpg)\??.*$/i)">
+        </div>
+        <p class="help is-danger is-hidden" id="image-help">Must be a URL with a valid image extension</p>
+    </div>
+    <div class="field">
+        <div class="control">
+            <label class="checkbox" title="Whether the image will relocated at the bottom and enlarged, or remain as a smaller thumbnail in the top-right">
+                <input type="checkbox" id="large-image">
+                Large Image
+            </label>
+        </div>
+    </div>
+{#    <div class="field">#}
+{#        <label class="label" for="video" title="Video for embed, must be direct URL to MP4, WebM, or MOV video">Video (URL)</label>#}
+{#        <div class="control has-icons-left">#}
+{#            <span class="icon is-small is-left has-text-grey">#}
+{#                <ion-icon name="videocam-outline"></ion-icon>#}
+{#            </span>#}
+{#            <input class="input" type="url" placeholder="https://s3.blankdvth.com/a-great-video.mp4" id="video" oninput="handleInput(this, /^https?:\/\/.*\/.*\.(mp4|webm|mov)\??.*$/i)">#}
+{#        </div>#}
+{#        <p class="help is-danger is-hidden" id="video-help">Must be a direct video URL with a type of MP4 WEBM, or MOV</p>#}
+{#    </div>#}
+    <div class="field">
+        <label class="label" for="redirect" title="What the actual embed link will redirect to. A redirect warning WILL take place.">Redirect URL</label>
+        <div class="control has-icons-left">
+            <span class="icon is-small is-left has-text-grey">
+                <ion-icon name="link-outline"></ion-icon>
+            </span>
+            <input class="input" type="url" placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ" id="redirect" oninput="handleInput(this)">
+            <p class="help is-danger is-hidden" id="redirect-help">Must be a URL</p>
+        </div>
+    </div>
+    <div class="field">
+        <div class="control">
+            <label class="checkbox">
+                <input type="checkbox" id="liability" oninput="handleInput(this)" required>
+                By checking this box, I acknowledge that I am using this service at my own risk and agree that the author holds no liability for any direct or indirect damages caused by the use of this service.
+            </label>
+            <p class="help is-danger is-hidden" id="liability-help">Acceptance of these terms is required to use this service.</p>
+        </div>
+    </div>
+    <div class="field is-grouped">
+        <div class="control">
+            <button class="button is-link" onclick="generate()">Generate</button>
+        </div>
+        <div class="control">
+            <button class="button is-ghost" onclick="resetToDefault()">Clear</button>
+        </div>
+    </div>
+    <article class="message is-dark is-hidden" id="url-box">
+        <div class="message-header">
+            <div class="is-align-items-center is-flex"><p>Generated URL</p>&nbsp;<ion-icon class="icon is-small is-clickable" name="clipboard-outline" onclick="copyURL()"></ion-icon></div>
+            <button class="delete" onclick="document.getElementById('url-box').classList.add('is-hidden')"></button>
+        </div>
+        <div class="message-body" style="overflow: auto;white-space: nowrap;">
+            <p id="generated-url">https://blankdvth.com/</p>
+        </div>
+    </article>
+    <div class="notification is-success is-hidden" id="copy-confirmation">
+        URL has been copied to clipboard
+    </div>
+    <!--
+    <div class="field">
+        <label class="label" for=""></label>
+        <div class="control">
+            <input class="input" type="text" placeholder="" id="">
+        </div>
+    </div>
+    -->
+
+    <h4 class="subtitle is-4">* Limitations</h4>
+
+</section>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script src="{{ url_for('static', filename='index.js') }}"></script>
+{#<script src="../static/index.js"></script>#}
+</body>
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>
+            Site by <i>blank_dvth</i> |
+            Made with <a href="https://palletsprojects.com/p/flask/" target="_blank" class="is-italic">Flask</a> and <a
+                href="https://bulma.io" target="_blank" class="is-italic">Bulma</a> |
+            <a href="mailto:contact@blankdvth.com" target="_blank" class="is-italic">contact@blankdvth.com</a>
+        </p>
+    </div>
+</footer>
+</html>

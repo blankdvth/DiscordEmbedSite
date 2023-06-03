@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    {% if data.title is defined %}
+        <title>{{ data.title }}</title>
+        <meta property="og:title" content="{{ data.title }}">
+    {% else %}
+        <title>Discord Embed Generator Site</title>
+    {% endif %}
+
+    {% if data.description is defined %}
+        <meta name="description" content="{{ data.description }}">
+        <meta property="og:description" content="{{ data.description }}">
+        {% if data.large_image is defined and data.large_image %}
+            <meta name="twitter:card" content="summary_large_image">
+        {% endif %}
+    {% endif %}
+
+    {% if data.image is defined %}
+        <meta property="og:image" content="{{ data.image }}">
+    {% endif %}
+
+    {% if data.provider is defined %}
+        <meta property="og:site_name" content="{{ data.provider }}">
+    {% endif %}
+
+    {% if data.provider_url is defined or data.author is defined or data.author_url is defined %}
+        <link type="application/json+oembed" href="/oembed/{{ raw_data }}" />
+    {% else %}
+    {% endif %}
+</head>
+<body>
+{% if data.redirect is defined %}
+    <noscript>You do not have JavaScript enabled, you will <b>not</b> be redirected automatically.<br><br></noscript>
+    <p><b>You will be redirected to <a href="{{ data.redirect }}" rel="external nofollow noreferrer noopener">{{ data.redirect }}</a> in <span id="time">15</span> seconds...</b></p>
+    <p>Close this tab to abort (Ctrl + W). Click the link to redirect immediately.</p>
+    <p>
+        This website allows Discord users to create their own embeds, including a feature that enables them to specify
+        a redirect URL. However, we want to emphasize that the website you are about to be redirected to is
+        user-specified and not endorsed by us. Therefore, we cannot guarantee its safety or reliability. Please
+        exercise extreme caution and be aware of the potential risks associated with visiting unknown websites.
+    </p>
+    <script>
+        let time = 15;
+        const interval = setInterval(function () {
+            time--;
+            document.getElementById('time').innerText = time.toString();
+            if (time <= 0) {
+                clearInterval(interval);
+                window.location.href = '{{ data.redirect }}';
+            }
+        }, 1000);
+    </script>
+{% else %}
+    <p>
+        This website allows Discord users to create their own embeds by sending a URL. These embeds can be sent
+        WITHOUT the usage of a self-bot, and as a result, <i>should</i> not violate Discord's Terms of Service
+        (this is neither legal advice nor a guarantee, interpretation is up to Discord and legal professionals).
+        However, this website is not endorsed by Discord and is not affiliated with Discord in any way.
+    </p>
+    <p>
+        If you would like to create your own embed, head <a href="/">here</a>.
+    </p>
+{% endif %}
+</body>
+</html>
