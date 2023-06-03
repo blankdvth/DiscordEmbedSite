@@ -27,7 +27,7 @@
     {% endif %}
 
     {% if data.provider_url is defined or data.author is defined or data.author_url is defined %}
-        <link type="application/json+oembed" href="/oembed/{{ raw_data }}.json" />
+        <link rel="alternate" type="application/json+oembed" href="https://embed.blankdvth.com/oembed/{{ raw_data }}.json" />
     {% else %}
     {% endif %}
 </head>
