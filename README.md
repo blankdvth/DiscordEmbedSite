@@ -31,6 +31,7 @@ availability of this site.
 Embeds can be created using a simple form on the site. Here is a breakdown of the fields:
 
 - **Title** - The title of the embed. This will be automatically hyperlinked to the (embed) website URL that was generated.
+- **Author** - The text for the author (provider) field of the embed.
 - **Description** - The description of the embed.
 - **Colour** - The colour of the embed sidebar. You can either use the colour picker or enter a 6-digit hex code.
 - **Media** - This can either be an image or a video.
@@ -51,6 +52,21 @@ to generate this as it is extremely simple to do yourself. Here is a breakdown o
 4. Append the compressed string to the end of the URL `https://embed.blankdvth.com/`.
 
 #### JSON Fields
+These keys for these fields are from the HTML form's ID attributes, with \- replaced with \_. 
+
+- `title` - The title of the embed. This will be automatically hyperlinked to the (embed) website URL that was generated.
+- `author` - The text for the author (provider) field of the embed.
+- `description` - The description of the embed.
+- `colour` - The colour of the embed sidebar. Must be a 6-digit hex code (including the #).
+- `media_type` - What the media URL is. Must be either `Image` or `Video` (case-sensitive).
+- `media` - The media URL, must be a direct link to the image or video. If video, must be `MP4`, `WebM`, or `MOV`.
+- `large_image` - Whether the image should be large. Only applies when `media_type` is `Image`.
+- `thumbnail` - The thumbnail image direct URL to use for the video. Only applies when `media_type` is `Video`.
+- `redirect` - The URL to redirect to if the embed website URL is clicked. A redirect warning will be displayed.
+
+##### Not Used
+- `colour-hex` - Internal use only, use `colour` instead.
+- `liability` - Not checked server-side, is only used during form validation. Set to `True` if you want to be really safe.
 
 #### Example Code
 The LZString module is available in many languages, see a list [here](https://www.npmjs.com/package/lz-string#other-languages).
