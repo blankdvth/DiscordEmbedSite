@@ -56,7 +56,7 @@ These keys for these fields are from the HTML form's ID attributes, with \- repl
 
 - `title` - The title of the embed. This will be automatically hyperlinked to the (embed) website URL that was generated.
 - `author` - The text for the author (provider) field of the embed.
-- `description` - The description of the embed.
+- `description` - The description of the embed. Will not be shown if embed media is a video.
 - `colour` - The colour of the embed sidebar. Must be a 6-digit hex code (including the #).
 - `media_type` - What the media URL is. Must be either `Image` or `Video` (case-sensitive).
 - `media` - The media URL, must be a direct link to the image or video. If video, must be `MP4`, `WebM`, or `MOV`.
