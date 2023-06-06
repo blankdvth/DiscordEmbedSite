@@ -24,7 +24,6 @@ def show(data: str):
     return render_template("show.html", data=load_data(data), raw_data=data)
 
 
-# TODO: Add error page (at least for 400)
 # TODO: Add embed preview (basic)
 if __name__ == '__main__':
     app.run('0.0.0.0', debug=True)
