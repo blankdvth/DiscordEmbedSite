@@ -11,7 +11,7 @@ def load_data(data) -> dict:
     try:
         return loads(LZString.decompressFromEncodedURIComponent(data))
     except (JSONDecodeError, KeyError, TypeError):
-        abort(400)
+        abort(404)
 
 
 @app.route('/')
