@@ -10,7 +10,7 @@ app = Flask(__name__)
 def load_data(data) -> dict:
     try:
         return loads(LZString.decompressFromEncodedURIComponent(data))
-    except (JSONDecodeError, KeyError):
+    except (JSONDecodeError, KeyError, TypeError):
         abort(400)
 
 
