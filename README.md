@@ -14,7 +14,8 @@ for embeds that are not sent by a webhook or bot.
 
 While in theory this abides by Discord's Terms of Service, using it is at your own risk. I am not responsible for
 any action taken against your account for using this site. There is also no guarantee made as to the longevity or
-availability of this site.
+availability of this site. Luckily, embeds are cached by Discord, so even if this site goes down, your embeds will
+still be available, except the redirect.
 
 ## Usage
 <details>
